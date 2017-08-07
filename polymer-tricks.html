@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="polymer-tricks">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <br />
+    set value to <bold>trickValue</bold> in tricks: <input id="trickValueInput" on-change="setTrickValue"></input> <br />
+    Property <bold>intputValue</bold> in PolymerTricks: [[trickValue]]
+    <br />
+  </template>
+
+  <script>
+    /**
+     * `polymer-tricks`
+     * The tricks in polymer
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PolymerTricks extends Polymer.Element {
+      static get is() { return 'polymer-tricks'; }
+      static get properties() {
+        return {
+          trickValue: {
+            type: String,
+            // notify: true,
+            readonly: true,
+            value: 'default value'
+          }
+        };
+      }
+
+      setTrickValue() {
+        this.trickValue = this.$.trickValueInput.value;
+      }
+    }
+
+    window.customElements.define(PolymerTricks.is, PolymerTricks);
+  </script>
+</dom-module>

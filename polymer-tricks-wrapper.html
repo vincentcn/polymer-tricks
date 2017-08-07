@@ -1,0 +1,68 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./polymer-tricks.html">
+
+<!--
+`<Name>` is Description
+
+@element Name
+-->
+<dom-module id="tricks-wrapper">
+  <template>
+    <style>
+      :host {
+        display: block
+      }
+    </style>
+<h2>Oneway data binding demo:</h2>
+set value to <bold>oneWayBindValue</bold> in trickesWrapper: <input id="oneWayInput" on-change="setOneWayBind"></input> <br />
+Property <bold>oneWayBindValue</bold> in PolymerTricks: [[oneWayBindValue]] <br />
+<polymer-tricks trick-value="[[oneWayBindValue]]"></polymer-tricks>
+<br /><br /><br />
+<h2>Twoway data binding demo:</h2>
+set value to <bold>twoWayBindValue</bold> in trickesWrapper: <input id="twoWayInput" on-change="setTwoWayBind"></input> <br />
+Property <bold>twoWayBindValue</bold> in PolymerTricks: [[twoWayBindValue]] <br /><br />
+<polymer-tricks trick-value="{{twoWayBindValue}}"></polymer-tricks>
+
+  </template>
+
+  <script>
+    class TricksWrapper extends Polymer.Element {
+
+      static get is() { return 'tricks-wrapper'; }
+
+      static get properties() {
+        return {
+          oneWayBindValue: {
+            type: String
+          },
+          twoWayBindValue: {
+            type: String
+          }
+        };
+      }
+
+      constructor() {
+        super();
+      }
+
+      ready() {
+        super.ready();
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          
+        });
+      }
+
+      setOneWayBind() {
+        this.oneWayBindValue = this.$.oneWayInput.value;
+      }
+
+      setTwoWayBind() {
+        this.twoWayBindValue = this.$.twoWayInput.value;
+      }
+
+    }
+
+    window.customElements.define(TricksWrapper.is, TricksWrapper);
+  </script>
+</dom-module>

@@ -1,0 +1,113 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<!--
+`<obverse>` is Description
+
+@element obverse
+-->
+<dom-module id="obverse-demo">
+  <template>
+    <style>
+      :host {
+        display: block
+      }
+    </style>
+
+    Observe and lifecycle demo...
+
+  </template>
+
+  <script>
+    class ObverseDemo extends Polymer.Element {
+
+      static get is() { return 'obverse-demo'; }
+
+      static get properties() {
+        return {
+          objectId: {
+            type: String,
+            value: null,
+            observer: "onObjectIdChanged"
+          },
+          recordId: {
+            type: String,
+            value: null,
+            observer: "onRecordIdChanged"
+          }
+        };
+      }
+                
+      static get observers() { 
+        return [
+          "onRecordChanged(objectId, recordId)",
+          "onUpdateObjectId(objectId)",
+          "onUpdateRecordId(recordId)"
+        ];
+      }
+
+      reset() {
+        this.setProperties({
+          objectId: null,
+          recordId: null
+        });
+      }
+
+      onObjectIdChanged(newObjId, oldObjId) {
+        console.log("Object Id is changed from " + oldObjId + " to " + newObjId + ".");
+      }
+
+      onUpdateObjectId(objectId) {
+        console.log("Object Id is updated to " + objectId + ".");
+      }
+
+      onUpdateRecordId(recordId) {
+        console.log("Record Id is updated to " + recordId + ".");
+      }
+
+      onRecordChanged(objectId, recordId) {
+        console.log("Object/Record Id is updated to (" + objectId + "," + recordId + ").");
+      }
+
+      onRecordIdChanged(newRecordId, oldRecordId) {
+        console.log("Record Id is changed from " + oldRecordId + " to " + newRecordId + ".");
+      }
+
+      constructor() {
+        super();
+        console.log("constructoring a new object");
+        this._printProerties();
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        console.log("invoking callback");
+        this._printProerties();
+
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        console.log("invoking disconnect...");
+      }
+
+      _printProerties() {
+        console.log("props => objectId=" + this.objectId + ", recordId=" + this.recordId);
+      }
+
+      ready() {
+        super.ready();
+        console.log("In ready...");
+        this._printProerties();
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          console.log("after next render...");
+          this._printProerties();
+        });
+      }
+
+    }
+
+    window.customElements.define(ObverseDemo.is, ObverseDemo);
+  </script>
+</dom-module>
